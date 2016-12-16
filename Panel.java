@@ -14,6 +14,8 @@ public class Panel extends JPanel {
 	private static final long serialVersionUID = 1L;
 	PeakG peak;
 	AntG ant;
+	Backbone backbone;
+	int choice = 0;
 	
 	int tab_x[] = new int[10];
 	int tab_y[] = new int[10];
@@ -25,8 +27,9 @@ public class Panel extends JPanel {
 	public Panel() {
 		super();
 		fillTabs();
-		peak = new PeakG(0,0);
+		peak = new PeakG(0,0,0);
 		ant = new AntG(0,0,'b');
+		backbone = new Backbone(3);
 	}
 
 
@@ -35,6 +38,21 @@ public class Panel extends JPanel {
 		// TODO Auto-generated method stub
 		super.paintComponent(g);
 		
+		switch(choice)
+		{
+		case 1:
+			paintTest(g);
+			break;
+		case 2:
+			paintBackbone(g);
+			break;
+		default:
+			break;
+		}
+	}
+	
+	public void paintTest(Graphics g)
+	{
 		for (int i = 0; i < 10; i++)
 		{
 			modifyAnt(tab_x[i]+5, tab_y[i]+5, 'r');
@@ -42,10 +60,11 @@ public class Panel extends JPanel {
 			peak.drawMe(g);
 			ant.drawMe(g);
 		}
-		
-		ant.drawMe(g);
-		peak.drawMe(g);	
-	//	clear(g);
+	}
+	
+	public void paintBackbone(Graphics g)
+	{
+		backbone.drawMe(g);
 	}
 	
 	public void modifyAnt(int x, int y, char color)
@@ -76,6 +95,11 @@ public class Panel extends JPanel {
 		super.paintComponent(g);
 	}
 	
+	public void setChoice(int choice, Graphics g)
+	{
+		this.choice = choice;
+		paintComponent(g);
+	}
 	
 	
 }

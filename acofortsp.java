@@ -1,4 +1,4 @@
-import java.util.*;
+/*import java.util.*;
 class Ant
     {
         public int position;
@@ -183,5 +183,6 @@ public class acofortsp
             return res;
 
         }
+        }
     */
-	}
+	

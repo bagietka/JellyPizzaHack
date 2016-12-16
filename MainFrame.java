@@ -55,15 +55,20 @@ public class MainFrame extends JFrame {
 		contentPane.add(panel, BorderLayout.EAST);
 		panel.setLayout(new GridLayout(0, 1, 0, 10));
 		
-		JButton btnNewButton = new JButton("ACO1");
+		JButton btnNewButton = new JButton("test rysowania");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				p.paintComponent(p.getGraphics());
+				p.setChoice(1, p.getGraphics());
 			}
 		});
 		panel.add(btnNewButton);
 		
-		JButton btnNewButton_1 = new JButton("ACO2");
+		JButton btnNewButton_1 = new JButton("test szkieletu");
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				p.setChoice(2, p.getGraphics());				
+			}
+		});
 		panel.add(btnNewButton_1);
 		
 		JButton btnNewButton_4 = new JButton("ACO3");
