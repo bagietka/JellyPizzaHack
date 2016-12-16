@@ -1,4 +1,5 @@
-/*import java.util.*;
+import java.util.*;
+
 class Ant
     {
         public int position;
@@ -15,7 +16,7 @@ class Ant
             this.visits = 1;
             this.lengthOfWay = 0;
             this.cities = new ArrayList<Boolean>();
-            for (int i = 0; i <= Program.Verticles; ++i) this.cities.add(false);
+            for (int i = 0; i <= acofortsp.Verticles; ++i) this.cities.add(false);
             this.cities.set(position,true);
         }
         public void Move(Path p)
@@ -30,7 +31,7 @@ class Ant
             this.visits = 1;
             this.way = new ArrayList<Path>();
             this.lengthOfWay = 0;
-            for (int i = 0; i <= Program.Verticles; ++i) this.cities.set(i,false);
+            for (int i = 0; i <= acofortsp.Verticles; ++i) this.cities.set(i,false);
             this.cities.set(position,true);
         }
     }
@@ -52,27 +53,25 @@ class Path
         }
         public double GetMultiplier()
         {
-            return Math.pow(this.pheromone, Program.Alpha) *
-                   Math.pow(this.InvertedLength, Program.Beta);
+            return Math.pow(this.pheromone, acofortsp.Alpha) *
+                   Math.pow(this.InvertedLength, acofortsp.Beta);
         }
     }
-
 public class acofortsp
     {
-    public int Ants = 20; // count of ants;
-    public int Iterations = 500;
-    public int Verticles = 5;
-    public int MaxLength = 9;// max length of path
-    public double Alpha = 1; // wykladnik
-    public double Beta = 1; // wykladnik
-    public double Ro = 0.01; // p in (1-p)*pheromone
-    public double Q = 2; // adding pheromone
-    public double Bonus = 1; // prize for finding better way
-    public static List<List<Path>> graph;
-	static void Main()
+    static public int Ants = 20; // count of ants;
+    static public int Iterations = 500;
+    static public int Verticles = 5;
+    static public int MaxLength = 9;// max length of path
+    static public double Alpha = 1; // wykladnik
+    static public double Beta = 1; // wykladnik
+    static public double Ro = 0.01; // p in (1-p)*pheromone
+    static public double Q = 2; // adding pheromone
+    static public double Bonus = 1; // prize for finding better way
+    static public List<List<Path>> graph;
+	public static void main(String[] args)
         {
 			graph = GenerateGraph();
-            int best = ShortestCircuit();
             List<Ant> ants = new ArrayList<Ant>();
             List<Path> bbb = new ArrayList<Path>();
             List<Integer> results = new ArrayList<Integer>();
@@ -87,102 +86,78 @@ public class acofortsp
                 {
                     if (ants.get(index).visits == Verticles+1) // all cities are visited
                     {
-                        ants.get(index).lengthOfWay += graph[ants.get(index).start_city][ants.get(index).way.Last().to].Length;
-                        ants.get(index).way.Add(graph[ants.get(index).way.Last().to][ants.get(index).start_city]);
-                        if (ants.get(index).lengthOfWay < results.Min())
-							{ 
-							bbb = ants.get(index).way; 
-							System.out.printl(ants.get(index).lengthOfWay);
-							}
+                        ants.get(index).lengthOfWay += graph.get(ants.get(index).start_city).get(ants.get(index).way.get(ants.get(index).way.size()-1).to).Length;
+                        ants.get(index).way.add(graph.get(ants.get(index).way.get(ants.get(index).way.size()-1).to).get(ants.get(index).start_city));
                         results.add(ants.get(index).lengthOfWay);
                         double delta = Q / ants.get(index).lengthOfWay;
-                        ants.get(index).way.ForEach(path => path.pheromone += Bonus * delta);
-                        graph.ForEach(l => l.ForEach(path => path.pheromone *= (1 - Ro)));
-                        ants.get(index).Clear();
+						for(int another_index = 0; another_index < ants.get(index).way.size();++another_index)
+						{
+							ants.get(index).way.get(another_index).pheromone += Bonus * delta; 
+						}
+						for(int another_index = 0; another_index < graph.size();++another_index)
+						{
+							for(int one_more_another_index = 0; one_more_another_index < graph.get(another_index).size() ; one_more_another_index++)
+							{
+								graph.get(another_index).get(one_more_another_index).pheromone *= (1-Ro);
+							}
+						}
+						ants.get(index).Clear();
                     }
-                var possible = graph[ants.get(index).position].Where(path => !ants.get(index).cities[path.to]);
-                n = possible.Sum((path => path.GetMultiplier())); // :)
-                foreach (var path in possible)
-                    {
-                        if (r.NextDouble() > path.GetMultiplier() / n) continue;
-                        ants.get(index).Move(path);
-                        ants.get(index).cities[path.to] = true;
-                        ants.get(index).visits++;
-                        break;
-                    }
+					n = 0.0;
+					for(int another_index=0;another_index < graph.get(ants.get(index).position).size() ; another_index++)
+					{
+						if(!ants.get(index).cities.get(
+								graph.get(ants.get(index).position).get(another_index).to))
+						{
+							n += graph.get(ants.get(index).position).get(another_index).GetMultiplier();
+						}
+					}
+					for(int another_index=0;another_index < graph.get(ants.get(index).position).size() ; another_index++)
+					{	
+						if(!ants.get(index).cities.get(graph.get(ants.get(index).position).get(another_index).to))
+						{
+							if (r.nextDouble() > graph.get(ants.get(index).position).get(another_index).GetMultiplier() / n) continue;
+							ants.get(index).Move(graph.get(ants.get(index).position).get(another_index));
+							ants.get(index).cities.set(graph.get(ants.get(index).position).get(another_index).to,true);
+							ants.get(index).visits++;
+							break;
+						}
+					}  
                 }
             }
-        }/*
-		static int CalcShortPath(int from, int to)
-        {
-            int[] dist = new int[graph.Count];
-            for(int i=0;i<dist.Length;++i) dist[i] = int.MaxValue;
-            Queue<int> q = new Queue<int>();
-            dist[from] = 0;
-            q.Enqueue(from);
-            while(q.Count > 0)
-            {
-                int top = q.Dequeue();
-                foreach(Path p in graph[top])
-                {
-                    if(dist[p.to] > dist[p.from] + p.Length)
-                    {
-                        dist[p.to] = dist[p.from] + p.Length;
-                        q.Enqueue(p.to);
-                    }
-                }
-            }
-            return dist[to];
+			int min = 100;
+			for(int i=0;i<results.size();++i)
+			{
+				min = (results.get(i) < min) ? results.get(i) : min;
+			}
+			System.out.println(min);
         }
-	static int ShortestCircuit()
-        {
-            int result = int.MaxValue;
-            int curr;
-            List<int> way;
-            List<int> perm = new List<int>();
-            for (int i = 1; i <= Verticles; ++i) perm.Add(i);
-            var p = new Permutations<int>(perm);
-            foreach(var v in p)
-            {
-                curr = 0;
-                way = new List<int>() { 0 };
-                way.AddRange(v);
-                for (int i = 0; i <= Verticles; ++i) curr += graph[way[i]][way[(i + 1) % Verticles]].Length;
-                result = Math.Min(result, curr);
-            }
-            return result;
-        
-		}
-	static public List<List<Path>> GenerateGraph()
+	public static List<List<Path>> GenerateGraph()
         {
             Random r = new Random();
-            List<List<Path>> res = new List<List<Path>>();
+            List<List<Path>> res = new ArrayList<List<Path>>();
             for (int i = 0; i <= Verticles; ++i)
             {
-                res.Add(new List<Path>());
+                res.add(new ArrayList<Path>());
                 for (int j = 0; j <= Verticles; ++j) 
                 {
-                    res[i].Add(new Path(-1, -1, -1));
+                    res.get(i).add(new Path(-1, -1, -1, -1));
                 }
             }
             for (int i = 0; i <= Verticles; ++i)
             {
                 for (int j = i; j <= Verticles; ++j)
                 {
-                    res[i][j] = new Path(i, j, r.Next(1, MaxLength), 1.0 / Verticles);
+                    res.get(i).set(j,new Path(i, j, r.nextInt(MaxLength)+1, 1.0 / Verticles));
                 }
             }
             for (int i = 0; i <= Verticles; ++i)
             {
                 for (int j = 0; j < i; ++j)
                 {
-                    res[i][j] = new Path(i, j, res[j][i].Length, res[j][i].pheromone);
+                    res.get(i).set(j, new Path(i, j, res.get(j).get(i).Length, res.get(j).get(i).pheromone));
                 }
             }
-            //res.ForEach(list => { list.ForEach(path => Console.Write(path.Length)); Console.WriteLine(); });
             return res;
-
         }
-        }
-    */
-	
+	}
