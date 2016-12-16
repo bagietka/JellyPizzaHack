@@ -12,14 +12,15 @@ import javax.swing.JPanel;
 public class Panel extends JPanel {
 
 	private static final long serialVersionUID = 1L;
-	PeakG a;
+	Backbone a;
 
 	/**
 	 * This is the default constructor
 	 */
 	public Panel() {
 		super();
-		a = new PeakG(100,100);
+		//this.setSize(110, 90);
+		a = new Backbone(3);
 	}
 
 
