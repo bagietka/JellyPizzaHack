@@ -101,6 +101,8 @@ public class acofortsp
 								graph.get(another_index).get(one_more_another_index).pheromone *= (1-Ro);
 							}
 						}
+						// TUTAJ MOZNA ODRYSOWAC CALY GRID
+						// Draw(graph, ants, Verticles); // ArrayList<List<Path>> ; ArrayList<Ant> ; int
 						ants.get(index).Clear();
                     }
 					n = 0.0;
