@@ -31,6 +31,7 @@ public class AntG {
 		
 		int radius = 6;
 		g.fillOval(x, y, radius, radius);
+		g.setColor(Color.BLACK);
 	}
 
 }

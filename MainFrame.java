@@ -11,6 +11,7 @@ import java.awt.Insets;
 import java.awt.Toolkit;
 import java.awt.GridLayout;
 import java.awt.FlowLayout;
+import java.awt.Graphics;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
@@ -47,11 +48,19 @@ public class MainFrame extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(new BorderLayout(0, 0));
 		
+		Panel p = new Panel();
+		p.setLayout(new GridBagLayout());
+		
 		JPanel panel = new JPanel();
 		contentPane.add(panel, BorderLayout.EAST);
 		panel.setLayout(new GridLayout(0, 1, 0, 10));
 		
 		JButton btnNewButton = new JButton("ACO1");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				p.paintComponent(p.getGraphics());
+			}
+		});
 		panel.add(btnNewButton);
 		
 		JButton btnNewButton_1 = new JButton("ACO2");
@@ -61,6 +70,11 @@ public class MainFrame extends JFrame {
 		panel.add(btnNewButton_4);
 		
 		JButton btnNewButton_3 = new JButton("Wyczyœæ");
+		btnNewButton_3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				p.clear(p.getGraphics());
+			}
+		});
 		panel.add(btnNewButton_3);
 		
 		JButton btnNewButton_2 = new JButton("Autorzy");
@@ -72,8 +86,7 @@ public class MainFrame extends JFrame {
 		});
 		panel.add(btnNewButton_2);
 		
-		Panel p = new Panel();
-		p.setLayout(new GridBagLayout());
+
 		
 		JPanel panel_1 = new JPanel();
 		contentPane.add(panel_1, BorderLayout.CENTER);
