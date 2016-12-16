@@ -72,8 +72,13 @@ public class MainFrame extends JFrame {
 		});
 		panel.add(btnNewButton_2);
 		
+		Panel p = new Panel();
+		p.setLayout(new GridBagLayout());
+		
 		JPanel panel_1 = new JPanel();
 		contentPane.add(panel_1, BorderLayout.CENTER);
+		panel_1.setLayout(new BorderLayout(0, 0));
+		panel_1.add(p);
 	}
 
 }
