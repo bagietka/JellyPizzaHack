@@ -9,6 +9,9 @@ import javax.swing.JTextArea;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import java.awt.Font;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class Authors extends JFrame {
 
@@ -37,6 +40,7 @@ public class Authors extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
+			
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
@@ -66,6 +70,15 @@ public class Authors extends JFrame {
 		JLabel lblEdytaRogula = new JLabel("Edyta Rogula");
 		lblEdytaRogula.setBounds(15, 148, 105, 14);
 		contentPane.add(lblEdytaRogula);
+		
+		JButton btnOkFajnie = new JButton("OK, fajnie");
+		btnOkFajnie.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				setVisible(false);
+			}
+		});
+		btnOkFajnie.setBounds(179, 239, 91, 23);
+		contentPane.add(btnOkFajnie);
 		
 		
 		
