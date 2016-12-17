@@ -1,5 +1,5 @@
 import java.util.*;
-import java.*;
+import java.util.Scanner;
 
 class Ant
     {
@@ -61,15 +61,15 @@ class Path
 public class classicaco
     {
     static public int Ants = 20; // count of ants;
-    static public int Iterations = 500;
-    static public int Verticles = 5;
-    static public int MaxLength = 9;// max length of path
-	static public int Degree = 500;// degree of Rudy's graph
+    static public int Iterations = 3575;
+    static public int MaxLength = 20;// max length of path
+	static public int Degree = 100;// degree of Rudy's graph
+    static public int Verticles = 8 * Degree + 5;
     static public double Alpha = 1; // wykladnik
-    static public double Beta = 1; // wykladnik
-    static public double Ro = 0.01; // p in (1-p)*pheromone
-    static public double Q = 2; // adding pheromone
-    static public double Bonus = 1; // prize for finding better way
+    static public double Beta = 1.5; // wykladnik
+    static public double Ro = 0.3; // p in (1-p)*pheromone
+    static public double Q = 2.14; // adding pheromone
+    static public double Bonus = 1.5; // prize for finding better way
     static public ArrayList<ArrayList<Path>> graph;
 	public static void main(String[] args)
         {
@@ -80,45 +80,42 @@ public class classicaco
             ArrayList<Integer> results = new ArrayList<Integer>();
 			results.add(MaxLength * Verticles);
             Random r = new Random(105);
-            for (int j = 0; j < Ants; j++) ants.add(new Ant(r.nextInt(Verticles)+1));
+            for (int j = 0; j < Ants; j++) ants.add(new Ant(0));
             double n = 0.0;
             for (int i = 0; i < Iterations; ++i) 
             {
-				for(int index=0;index < ants.size();++index)
-                {
-					if(ants.get(index).position == Verticles) 
+				for(Ant ant:ants)
+				{
+					if(ant.position == Verticles) 
 					{
-						double delta = Q / ants.get(index).lengthOfWay;
-						for(int another_index = 0; another_index < ants.get(index).way.size(); another_index++)
+						double delta = Q / ant.lengthOfWay;
+						results.add(ant.lengthOfWay);
+						System.out.println(ant.lengthOfWay);
+						for(Path path : ant.way)
 						{
-							ants.get(index).way.get(another_index).pheromone += Bonus * delta;
+							path.pheromone += Bonus * delta;
 						}
-						for(int another_index = 0; another_index < graph.size();++another_index)
+						for(ArrayList<Path> list : graph)
+						{
+							for(Path path : list)
 							{
-							for(int one_more_another_index = 0; one_more_another_index < graph.get(another_index).size() ; one_more_another_index++)
-								{
-								graph.get(another_index).get(one_more_another_index).pheromone *= (1-Ro);
-								}
+								path.pheromone *= (1-Ro);
 							}
-						ants.get(index).Clear();
+						}
+						ant.Clear();
 					}
 					n = 0.0;
-                    for(int another_index=0;another_index < graph.get(ants.get(index).position).size() ; another_index++)
-					{
-						if(!ants.get(index).cities.get(// kopiowane, ciekawe czy wejdzie
-								graph.get(ants.get(index).position).get(another_index).to))
-						{
-							n += graph.get(ants.get(index).position).get(another_index).GetMultiplier();
-						}
+					for(Path path : graph.get(ant.position))
+					{                 
+						if(!ant.cities.get(path.to)) n += path.GetMultiplier();
 					}
-					for(int another_index=0;another_index < graph.get(ants.get(index).position).size() ; another_index++)
+					for(Path path : graph.get(ant.position))
 					{	
-						if(!ants.get(index).cities.get(graph.get(ants.get(index).position).get(another_index).to))
-						{
-							if (r.nextDouble() > graph.get(ants.get(index).position).get(another_index).GetMultiplier() / n) continue;
-							ants.get(index).Move(graph.get(ants.get(index).position).get(another_index));
-							ants.get(index).cities.set(graph.get(ants.get(index).position).get(another_index).to,true);
-							ants.get(index).visits++;
+						if(!ant.cities.get(path.to)){
+							if (r.nextDouble() > path.GetMultiplier() / n) continue;
+							ant.Move(path);
+							ant.cities.set(path.to,true);
+							ant.visits++;
 							break;
 						}
 					}  
@@ -129,9 +126,12 @@ public class classicaco
 			{
 				min = (results.get(i) < min) ? results.get(i) : min;
 			}
+			System.out.print("best:");
+			System.out.println(CalcShortPath(0, Verticles));
+			System.out.print("our best:");
 			System.out.println(min);
         }
-		static int CalcShortPath(List<List<Path>> graph, int from, int to)
+		static int CalcShortPath(int from, int to)
 			{
 				int[] dist = new int[graph.size()];
 				for(int i=0;i<dist.length;++i) dist[i] = Integer.MAX_VALUE;
