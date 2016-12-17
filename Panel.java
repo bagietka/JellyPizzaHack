@@ -76,7 +76,7 @@ public class Panel extends JPanel {
 		
 		for (int i  = 0; i < 10000; i++)
 		{
-		fireworks.setFirework(Fireworks.randomInt()%1000, Fireworks.randomInt()%1000, Fireworks.randomInt()%100, Fireworks.randomInt()%9);
+		fireworks.setFirework(Fireworks.randomInt()%((int)java.awt.Toolkit.getDefaultToolkit().getScreenSize().getWidth()-200), Fireworks.randomInt()%((int) java.awt.Toolkit.getDefaultToolkit().getScreenSize().getHeight()), Fireworks.randomInt()%100, Fireworks.randomInt()%9);
 		fireworks.drawMe(g);
 		try {
 			Thread.sleep(0);
@@ -89,7 +89,7 @@ public class Panel extends JPanel {
 			
 		Graphics2D g2d = (Graphics2D) g;
 		g2d.setColor(Color.BLACK);
-		String text = "Hcemy Tylko Tê Pizzê (HTTP)";
+		String text = "Hcemy Tylko Tę Pizzę (HTTP)";
 		Font f = new Font("Courier New", Font.BOLD, 60);
 		
 	
