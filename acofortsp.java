@@ -18,7 +18,7 @@ class Ant
             this.visits = 1;
             this.lengthOfWay = 0;
             this.cities = new ArrayList<Boolean>();
-            for (int i = 0; i <= acofortsp.Verticles; ++i) this.cities.add(false);
+            for (int i = 0; i < acofortsp.Verticles; ++i) this.cities.add(false);
             this.cities.set(position,true);
         }
         public void Move(Path p)
@@ -33,7 +33,7 @@ class Ant
             this.visits = 1;
             this.way = new ArrayList<Path>();
             this.lengthOfWay = 0;
-            for (int i = 0; i <= acofortsp.Verticles; ++i) this.cities.set(i,false);
+            for (int i = 0; i < acofortsp.Verticles; ++i) this.cities.set(i,false);
             this.cities.set(position,true);
         }
     }
@@ -95,7 +95,7 @@ public class acofortsp
 			results.add(MaxLength * Verticles);
             List<Ant> finished = new ArrayList<Ant>();
             Random r = new Random(105);
-            for (int j = 0; j < Ants; j++) ants.add(new Ant(r.nextInt(Verticles)+1));
+            for (int j = 0; j < Ants; j++) ants.add(new Ant(r.nextInt(Verticles)));
             double n = 0.0;
             for (int i = 0; i < Iterations; ++i) 
             {
