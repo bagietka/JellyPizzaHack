@@ -27,7 +27,7 @@ public class Authors extends JFrame {
 	 */
 	public Authors() {
 		//setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 450, 208);
 		contentPane = new JPanel();
 			
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -49,15 +49,15 @@ public class Authors extends JFrame {
 		contentPane.add(lblPiotrAntoniszyn);
 		
 		JLabel lblPiotrGdowski = new JLabel("Piotr Gdowski");
-		lblPiotrGdowski.setBounds(15, 66, 105, 14);
+		lblPiotrGdowski.setBounds(15, 60, 105, 14);
 		contentPane.add(lblPiotrGdowski);
 		
 		JLabel lblAdamGuszkowski = new JLabel("Adam Guszkowski");
-		lblAdamGuszkowski.setBounds(15, 106, 118, 14);
+		lblAdamGuszkowski.setBounds(15, 90, 118, 14);
 		contentPane.add(lblAdamGuszkowski);
 		
 		JLabel lblEdytaRogula = new JLabel("Edyta Rogula");
-		lblEdytaRogula.setBounds(15, 148, 105, 14);
+		lblEdytaRogula.setBounds(15, 120, 105, 14);
 		contentPane.add(lblEdytaRogula);
 		
 		JButton btnOkFajnie = new JButton("OK, fajnie");
@@ -66,7 +66,7 @@ public class Authors extends JFrame {
 				setVisible(false);
 			}
 		});
-		btnOkFajnie.setBounds(179, 239, 91, 23);
+		btnOkFajnie.setBounds(175, 147, 91, 23);
 		contentPane.add(btnOkFajnie);
 		
 		
