@@ -5,7 +5,7 @@ import java.util.*;
 public class acofortsp
     {
     static public int Ants = 10; // count of ants;
-    static public int Iterations = 3000;
+    static public int Iterations = 400;
     static public int Verticles = 7;
     static public int MaxLength = 9;// max length of path
     static public double Alpha = 1; // wykladnik
@@ -16,7 +16,6 @@ public class acofortsp
     static public List<List<Path>> graph;
     static MainFrame frame;
     static public List<Path> bestway;
-    
     
 	public static void main(String[] args)
         {
