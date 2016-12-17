@@ -25,14 +25,13 @@ public class PeakG
 		g.setColor(Color.BLACK);
 		g.drawOval(x,y,r,r);
 		if (alpha != 0) {
-			//alpha = 0;
-			this.x -= (int) java.awt.Toolkit.getDefaultToolkit().getScreenSize().getWidth()-200/2;
-			this.y -= (int) java.awt.Toolkit.getDefaultToolkit().getScreenSize().getHeight()/2;
+			this.x -= (java.awt.Toolkit.getDefaultToolkit().getScreenSize().getWidth()-200)/2;
+			this.y -=  (java.awt.Toolkit.getDefaultToolkit().getScreenSize().getHeight())/2;
+			int tmpX = this.x;
 			this.x = (int) (this.x*Math.cos(alpha)-this.y*Math.sin(alpha));
-			this.y = (int) (this.x*Math.sin(alpha)+this.y*Math.cos(alpha));
-			this.x += (int) java.awt.Toolkit.getDefaultToolkit().getScreenSize().getWidth()-200/2;
-			this.y += (int) java.awt.Toolkit.getDefaultToolkit().getScreenSize().getHeight()/2;
-			System.out.println("drawMe " + this.x + " " + this.y);
+			this.y = (int) (tmpX*Math.sin(alpha)+this.y*Math.cos(alpha));
+			this.x += (java.awt.Toolkit.getDefaultToolkit().getScreenSize().getWidth()-200)/2;
+			this.y +=  (java.awt.Toolkit.getDefaultToolkit().getScreenSize().getHeight())/2;
 		}
 	}
 	

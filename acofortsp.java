@@ -142,7 +142,7 @@ public class acofortsp
 						}
 						System.out.println();
 					}*/
-					System.out.println(graph.size() + " " + ants.get(index).position);
+					//System.out.println(graph.size() + " " + ants.get(index).position);
 					for(int another_index=0;another_index < graph.get(ants.get(index).position).size()-1 ; another_index++)
 					{
 						if(!ants.get(index).cities.get(
