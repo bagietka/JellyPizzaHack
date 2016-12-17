@@ -80,7 +80,7 @@ public class MainFrame extends JFrame {
 		});
 		panel.add(btnNewButton_4);
 		
-		JButton btnNewButton_3 = new JButton("Wyczyœæ");
+		JButton btnNewButton_3 = new JButton("WyczyÅ“Ã¦");
 		btnNewButton_3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				p.clear(p.getGraphics());

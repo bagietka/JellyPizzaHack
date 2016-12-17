@@ -175,7 +175,7 @@ public class asrankaco
 		}
 	
 		public static void Draw(List<List<Path>> graph2, List<Ant> ants2, int Verticles){
-			acofortsp.frame.p.paintBackbone(acofortsp.frame.p.getBetterGraphics(),Verticles,  graph2, ants2); //TODO Verticles +1 ? Rudy!!!
+			acofortsp.frame.p.paintBackbone(acofortsp.frame.p.getBetterGraphics(), Verticles, graph2, ants2); //TODO Verticles +1 ? Rudy!!!
 		}
 	
 	}
