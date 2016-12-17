@@ -17,7 +17,7 @@ class Ant
             this.visits = 1;
             this.lengthOfWay = 0;
             this.cities = new ArrayList<Boolean>();
-            for (int i = 0; i <= acofortsp.Verticles; ++i) this.cities.add(false);
+            for (int i = 0; i <= asrankaco.Verticles; ++i) this.cities.add(false);
             this.cities.set(position,true);
         }
         public void Move(Path p)
@@ -32,7 +32,7 @@ class Ant
             this.visits = 1;
             this.way = new ArrayList<Path>();
             this.lengthOfWay = 0;
-            for (int i = 0; i <= acofortsp.Verticles; ++i) this.cities.set(i,false);
+            for (int i = 0; i <= asrankaco.Verticles; ++i) this.cities.set(i,false);
             this.cities.set(position,true);
         }
     }
@@ -54,8 +54,8 @@ class Path
         }
         public double GetMultiplier()
         {
-            return Math.pow(this.pheromone, acofortsp.Alpha) *
-                   Math.pow(this.InvertedLength, acofortsp.Beta);
+            return Math.pow(this.pheromone, asrankaco.Alpha) *
+                   Math.pow(this.InvertedLength, asrankaco.Beta);
         }
     }
 class CompareTo implements Comparator <Path>
