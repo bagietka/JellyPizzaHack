@@ -30,7 +30,7 @@ public class Fireworks {
 	{
 		Double rand = Math.random()*2000;
 		int rand_int = rand.intValue();
-		System.out.println("dabl " + rand + " ynt " + rand_int);
+		//System.out.println("dabl " + rand + " ynt " + rand_int);
 		return rand_int;
 	}
 	
@@ -88,7 +88,7 @@ public class Fireworks {
 		this.x = x;
 		this.y = y;
 		this.color = color;
-		System.out.println("Dane " + x + " " + y + " " + r + " " + color);
+		//System.out.println("Dane " + x + " " + y + " " + r + " " + color);
 	}
 	
 	

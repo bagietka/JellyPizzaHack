@@ -74,12 +74,12 @@ public class Panel extends JPanel {
 	public void paintFireworks(Graphics g)
 	{
 		
-		for (int i  = 0; i < 10000; i++)
+		for (int i  = 0; i < 3000; i++)
 		{
 		fireworks.setFirework(Fireworks.randomInt()%((int)java.awt.Toolkit.getDefaultToolkit().getScreenSize().getWidth()-200), Fireworks.randomInt()%((int) java.awt.Toolkit.getDefaultToolkit().getScreenSize().getHeight()), Fireworks.randomInt()%100, Fireworks.randomInt()%9);
 		fireworks.drawMe(g);
 		try {
-			Thread.sleep(0);
+			Thread.sleep(1);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
