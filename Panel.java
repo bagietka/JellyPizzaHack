@@ -5,6 +5,7 @@ import java.awt.Image;
 import java.awt.image.ImageObserver;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.imageio.ImageIO;
@@ -17,9 +18,12 @@ public class Panel extends JPanel {
 	AntG ant;
 	Backbone backbone;
 	int choice = 0;
+	List<PeakG> listOfPeaks = new ArrayList<PeakG>();
+	
 	
 	int tab_x[] = new int[10];
 	int tab_y[] = new int[10];
+	
 	
 
 	/**
@@ -30,7 +34,7 @@ public class Panel extends JPanel {
 		fillTabs();
 		peak = new PeakG(0,0,0);
 		ant = new AntG(0,0,'b');
-		backbone = new Backbone(3,2);
+		backbone = new Backbone(30,2, listOfPeaks);
 	}
 
 
@@ -39,17 +43,21 @@ public class Panel extends JPanel {
 		// TODO Auto-generated method stub
 		super.paintComponent(g);
 		
+		//Line line = new Line(1, 10, backbone.getList(g),10);
+		
+		//line.drawMe(g);
 		switch(choice)
 		{
 		case 1:
 			paintTest(g);
 			break;
 		case 2:
-			//paintBackbone(g,3,2);
+			//paintBackbone(g, n, v, graph, ants);
 			break;
 		default:
 			break;
 		}
+	
 	}
 	
 	public void paintTest(Graphics g)
@@ -65,8 +73,9 @@ public class Panel extends JPanel {
 	
 	public void paintBackbone(Graphics g, int n, int v, List<List<Path>> graph, List<Ant> ants)
 	{
-		
 		backbone.drawMe(g,n,v, graph, ants);
+		//backbone.drawMe(g, 1000000, 2);
+		//wyglada super, ale jest bezuzyteczne
 	}
 	
 	public void modifyAnt(int x, int y, char color)
@@ -104,9 +113,7 @@ public class Panel extends JPanel {
 	}
 	
 	public Graphics getBetterGraphics(){
-		//System.out.println("No elo" + this.getGraphics());
-		return this.getGraphics();
-	}
-	
-	
+				//System.out.println("No elo" + this.getGraphics());
+				return this.getGraphics();
+			}
 }

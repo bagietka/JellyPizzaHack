@@ -9,15 +9,18 @@ import java.util.List;
 
 public class Backbone {
 	
-	List<PeakG> listOfPeaks = new ArrayList<PeakG>();
+	List<PeakG> listOfPeaks;
 	static final int width = (int) java.awt.Toolkit.getDefaultToolkit().getScreenSize().getWidth()-200;
 	static final int height = (int) java.awt.Toolkit.getDefaultToolkit().getScreenSize().getHeight();
-	int n; //liczba kolumn = 2*n; n-k¹t
+	int n; //liczba kolumn = 2*n; n-kÂ¹t
 	int version;
+	List<List<Path>> graph;
+	List<Ant> ants;
 	
-	Backbone(int n, int v){
+	Backbone(int n, int v, List<PeakG> listOfPeaks){
 		this.n = n;
 		this.version = v;
+		this.listOfPeaks = listOfPeaks;
 	}
 	
 	public void drawMe(Graphics g, int n, int v, List<List<Path>> graph, List<Ant> ants) {
@@ -75,13 +78,19 @@ public class Backbone {
 		}
 		
 		for (List<Path> element : graph){
-			for (Path p: element){
-				//stwórz ³¹czenie miêdzy dwoma Peaksami
-			}
-		}
-		for (Ant a: ants){
-			
-		}
+						for (Path p: element){
+							//stwÃ³rz Â³Â¹czenie miÃªdzy dwoma Peaksami
+						}
+					}
+					for (Ant a: ants){
+						
+					}
+	}
+	
+	public List<PeakG> getList(Graphics g)
+	{
+		this.drawMe(g, n, version, graph, ants);
+		return this.listOfPeaks;
 	}
 	
 

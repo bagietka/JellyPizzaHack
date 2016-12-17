@@ -13,7 +13,6 @@ import java.awt.GridLayout;
 import java.awt.FlowLayout;
 import java.awt.Graphics;
 import java.awt.event.ActionListener;
-import java.util.List;
 import java.awt.event.ActionEvent;
 
 public class MainFrame extends JFrame {
@@ -34,9 +33,9 @@ public class MainFrame extends JFrame {
 					e.printStackTrace();
 				}
 			}
-		});
-	}
-*/
+		});*/
+	
+
 	/**
 	 * Create the frame.
 	 */
@@ -60,7 +59,7 @@ public class MainFrame extends JFrame {
 		JButton btnNewButton = new JButton("test rysowania");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				p.setChoice(1, p.getGraphics());
+				p.setChoice(2, p.getGraphics());
 			}
 		});
 		panel.add(btnNewButton);
@@ -68,7 +67,7 @@ public class MainFrame extends JFrame {
 		JButton btnNewButton_1 = new JButton("test szkieletu");
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				p.setChoice(2, p.getGraphics());				
+				p.setChoice(0, p.getGraphics());				
 			}
 		});
 		panel.add(btnNewButton_1);
@@ -99,8 +98,6 @@ public class MainFrame extends JFrame {
 		contentPane.add(panel_1, BorderLayout.CENTER);
 		panel_1.setLayout(new BorderLayout(0, 0));
 		panel_1.add(p);
-		
-
 	}
 
 }

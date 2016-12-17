@@ -21,5 +21,17 @@ public class PeakG
 		// TODO Auto-generated method stub
 		g.setColor(Color.BLACK);
 		g.drawOval(x,y,r,r);
-}
+	}
+	
+	public int getXfromN()
+	{
+		return x;
+	}
+	
+	public int getYfromN()
+	{
+		return y;
+	}
+	
+	
 }
