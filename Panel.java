@@ -32,7 +32,7 @@ public class Panel extends JPanel {
 	public Panel() {
 		super();
 		fillTabs();
-		peak = new PeakG(0,0,0);
+		peak = new PeakG(0,0,0,0);
 		ant = new AntG(0,0,'b');
 		backbone = new Backbone(30,2, listOfPeaks);
 	}
