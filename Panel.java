@@ -5,6 +5,7 @@ import java.awt.Image;
 import java.awt.image.ImageObserver;
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
@@ -29,7 +30,7 @@ public class Panel extends JPanel {
 		fillTabs();
 		peak = new PeakG(0,0,0);
 		ant = new AntG(0,0,'b');
-		backbone = new Backbone(3);
+		backbone = new Backbone(3,2);
 	}
 
 
@@ -44,7 +45,7 @@ public class Panel extends JPanel {
 			paintTest(g);
 			break;
 		case 2:
-			paintBackbone(g);
+			//paintBackbone(g,3,2);
 			break;
 		default:
 			break;
@@ -62,9 +63,10 @@ public class Panel extends JPanel {
 		}
 	}
 	
-	public void paintBackbone(Graphics g)
+	public void paintBackbone(Graphics g, int n, int v, List<List<Path>> graph, List<Ant> ants)
 	{
-		backbone.drawMe(g);
+		
+		backbone.drawMe(g,n,v, graph, ants);
 	}
 	
 	public void modifyAnt(int x, int y, char color)
@@ -99,6 +101,11 @@ public class Panel extends JPanel {
 	{
 		this.choice = choice;
 		paintComponent(g);
+	}
+	
+	public Graphics getBetterGraphics(){
+		//System.out.println("No elo" + this.getGraphics());
+		return this.getGraphics();
 	}
 	
 	

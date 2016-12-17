@@ -13,16 +13,18 @@ import java.awt.GridLayout;
 import java.awt.FlowLayout;
 import java.awt.Graphics;
 import java.awt.event.ActionListener;
+import java.util.List;
 import java.awt.event.ActionEvent;
 
 public class MainFrame extends JFrame {
 
 	private JPanel contentPane;
+	public Panel p;
 
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -34,7 +36,7 @@ public class MainFrame extends JFrame {
 			}
 		});
 	}
-
+*/
 	/**
 	 * Create the frame.
 	 */
@@ -48,7 +50,7 @@ public class MainFrame extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(new BorderLayout(0, 0));
 		
-		Panel p = new Panel();
+		p = new Panel();
 		p.setLayout(new GridBagLayout());
 		
 		JPanel panel = new JPanel();
@@ -97,6 +99,8 @@ public class MainFrame extends JFrame {
 		contentPane.add(panel_1, BorderLayout.CENTER);
 		panel_1.setLayout(new BorderLayout(0, 0));
 		panel_1.add(p);
+		
+
 	}
 
 }

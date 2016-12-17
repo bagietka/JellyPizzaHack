@@ -1,3 +1,5 @@
+import java.awt.EventQueue;
+import java.awt.Graphics;
 import java.util.*;
 
 class Ant
@@ -69,8 +71,23 @@ public class acofortsp
     static public double Q = 2; // adding pheromone
     static public double Bonus = 1; // prize for finding better way
     static public List<List<Path>> graph;
+    static MainFrame frame;
+    
+    
 	public static void main(String[] args)
         {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					frame = new MainFrame();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+		
+		
 			graph = GenerateGraph();
             List<Ant> ants = new ArrayList<Ant>();
             List<Path> bbb = new ArrayList<Path>();
@@ -102,7 +119,19 @@ public class acofortsp
 							}
 						}
 						// TUTAJ MOZNA ODRYSOWAC CALY GRID
-						// Draw(graph, ants, Verticles); // ArrayList<List<Path>> ; ArrayList<Ant> ; int
+						
+						//System.out.println("# " + frame.p.getGraphics());
+						Boolean next = true;
+						while (next == true){
+							try {
+								frame.p.getGraphics();
+								if (frame.p.getGraphics() != null) next = false;
+							}catch(Exception e){
+								//System.out.println("");
+								next = true;
+							}
+						}
+						Draw(graph, ants, Verticles); // ArrayList<List<Path>> ; ArrayList<Ant> ; int
 						ants.get(index).Clear();
                     }
 					n = 0.0;
@@ -132,7 +161,9 @@ public class acofortsp
 			{
 				min = (results.get(i) < min) ? results.get(i) : min;
 			}
-			System.out.println(min);
+			//System.out.println(min);
+			
+			
         }
 	public static List<List<Path>> GenerateGraph()
         {
@@ -162,4 +193,10 @@ public class acofortsp
             }
             return res;
         }
+	
+	public static void Draw(List<List<Path>> graph2, List<Ant> ants2, int Verticles){
+		
+		frame.p.paintBackbone(frame.p.getBetterGraphics(),Verticles,2, graph2, ants2);
+	}
+	
 	}

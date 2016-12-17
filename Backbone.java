@@ -20,8 +20,10 @@ public class Backbone {
 		this.version = v;
 	}
 	
-	public void drawMe(Graphics g) {
+	public void drawMe(Graphics g, int n, int v, List<List<Path>> graph, List<Ant> ants) {
 		// TODO Auto-generated method stub
+		this.n = n;
+		this.version = v;
 		int number = 0;
 		int distanceX;
 		int distanceY;
@@ -70,6 +72,15 @@ public class Backbone {
 				break;
 			default:
 				g.drawString("Zle dane, ziomek. No wez sie postaraj, gosciu", width/2, height/2);
+		}
+		
+		for (List<Path> element : graph){
+			for (Path p: element){
+				//stwórz ³¹czenie miêdzy dwoma Peaksami
+			}
+		}
+		for (Ant a: ants){
+			
 		}
 	}
 	
