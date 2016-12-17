@@ -59,7 +59,7 @@ public class MainFrame extends JFrame {
 		JButton btnNewButton = new JButton("test rysowania");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				p.setChoice(2, p.getGraphics());
+				p.setChoice(1, p.getGraphics());
 			}
 		});
 		panel.add(btnNewButton);
@@ -73,6 +73,11 @@ public class MainFrame extends JFrame {
 		panel.add(btnNewButton_1);
 		
 		JButton btnNewButton_4 = new JButton("ACO3");
+		btnNewButton_4.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				acofortsp.start();
+			}
+		});
 		panel.add(btnNewButton_4);
 		
 		JButton btnNewButton_3 = new JButton("Wyczyœæ");

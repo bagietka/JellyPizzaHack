@@ -19,6 +19,7 @@ public class Panel extends JPanel {
 	Backbone backbone;
 	int choice = 0;
 	List<PeakG> listOfPeaks = new ArrayList<PeakG>();
+	acofortsp acofortsp_obj;
 	
 	
 	int tab_x[] = new int[10];

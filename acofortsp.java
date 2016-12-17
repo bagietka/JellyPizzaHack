@@ -61,9 +61,9 @@ class Path
     }
 public class acofortsp
     {
-    static public int Ants = 20; // count of ants;
+    static public int Ants = 200; // count of ants;
     static public int Iterations = 500;
-    static public int Verticles = 10;
+    static public int Verticles = 8;
     static public int MaxLength = 9;// max length of path
     static public double Alpha = 1; // wykladnik
     static public double Beta = 1; // wykladnik
@@ -87,92 +87,96 @@ public class acofortsp
 			}
 		});
 		
-		
-			graph = GenerateGraph();
-            List<Ant> ants = new ArrayList<Ant>();
-            List<Path> bbb = new ArrayList<Path>();
-            List<Integer> results = new ArrayList<Integer>();
-			results.add(MaxLength * Verticles);
-            List<Ant> finished = new ArrayList<Ant>();
-            Random r = new Random(105);
-            for (int j = 0; j < Ants; j++) ants.add(new Ant(r.nextInt(Verticles)));
-            double n = 0.0;
-            for (int i = 0; i < Iterations; ++i) 
+			//start();
+        }
+	
+	public static void start()
+	{
+		graph = GenerateGraph();
+        List<Ant> ants = new ArrayList<Ant>();
+        List<Path> bbb = new ArrayList<Path>();
+        List<Integer> results = new ArrayList<Integer>();
+		results.add(MaxLength * Verticles);
+        List<Ant> finished = new ArrayList<Ant>();
+        Random r = new Random(105);
+        for (int j = 0; j < Ants; j++) ants.add(new Ant(r.nextInt(Verticles)));
+        double n = 0.0;
+        for (int i = 0; i < Iterations; ++i) 
+        {
+			for(int index=0;index < ants.size();++index)
             {
-				for(int index=0;index < ants.size();++index)
+                if (ants.get(index).visits == Verticles) // all cities are visited
                 {
-                    if (ants.get(index).visits == Verticles) // all cities are visited
-                    {
-                        ants.get(index).lengthOfWay += graph.get(ants.get(index).start_city).get(ants.get(index).way.get(ants.get(index).way.size()-1).to).Length;
-                        ants.get(index).way.add(graph.get(ants.get(index).way.get(ants.get(index).way.size()-1).to).get(ants.get(index).start_city));
-                        results.add(ants.get(index).lengthOfWay);
-                        double delta = Q / ants.get(index).lengthOfWay;
-						for(int another_index = 0; another_index < ants.get(index).way.size();++another_index)
-						{
-							ants.get(index).way.get(another_index).pheromone += Bonus * delta; 
-						}
-						for(int another_index = 0; another_index < graph.size();++another_index)
-						{
-							for(int one_more_another_index = 0; one_more_another_index < graph.get(another_index).size() ; one_more_another_index++)
-							{
-								graph.get(another_index).get(one_more_another_index).pheromone *= (1-Ro);
-							}
-						}
-						// TUTAJ MOZNA ODRYSOWAC CALY GRID
-						
-						//System.out.println("# " + frame.p.getGraphics());
-						Boolean next = true;
-						while (next == true){
-							try {
-								frame.p.getGraphics();
-								if (frame.p.getGraphics() != null) next = false;
-							}catch(Exception e){
-								//System.out.println("");
-								next = true;
-							}
-						}
-						Draw(graph, ants, Verticles); // ArrayList<List<Path>> ; ArrayList<Ant> ; int
-						ants.get(index).Clear();
-                    }
-					n = 0.0;
-					
-					/*for (int k = 0; k < graph.size(); k++){
-						for (int j = 0; j < graph.get(k).size(); j++){
-							System.out.print(graph.get(k).get(j).to);
-						}
-						System.out.println();
-					}*/
-					//System.out.println(graph.size() + " " + ants.get(index).position);
-					for(int another_index=0;another_index < graph.get(ants.get(index).position).size()-1 ; another_index++)
+                    ants.get(index).lengthOfWay += graph.get(ants.get(index).start_city).get(ants.get(index).way.get(ants.get(index).way.size()-1).to).Length;
+                    ants.get(index).way.add(graph.get(ants.get(index).way.get(ants.get(index).way.size()-1).to).get(ants.get(index).start_city));
+                    results.add(ants.get(index).lengthOfWay);
+                    double delta = Q / ants.get(index).lengthOfWay;
+					for(int another_index = 0; another_index < ants.get(index).way.size();++another_index)
 					{
-						if(!ants.get(index).cities.get(
-								graph.get(ants.get(index).position).get(another_index).to))
+						ants.get(index).way.get(another_index).pheromone += Bonus * delta; 
+					}
+					for(int another_index = 0; another_index < graph.size();++another_index)
+					{
+						for(int one_more_another_index = 0; one_more_another_index < graph.get(another_index).size() ; one_more_another_index++)
 						{
-							n += graph.get(ants.get(index).position).get(another_index).GetMultiplier();
+							graph.get(another_index).get(one_more_another_index).pheromone *= (1-Ro);
 						}
 					}
-					for(int another_index=0;another_index < graph.get(ants.get(index).position).size() ; another_index++)
-					{	
-						if(!ants.get(index).cities.get(graph.get(ants.get(index).position).get(another_index).to))
-						{
-							if (r.nextDouble() > graph.get(ants.get(index).position).get(another_index).GetMultiplier() / n) continue;
-							ants.get(index).Move(graph.get(ants.get(index).position).get(another_index));
-							ants.get(index).cities.set(graph.get(ants.get(index).position).get(another_index).to,true);
-							ants.get(index).visits++;
-							break;
+					// TUTAJ MOZNA ODRYSOWAC CALY GRID
+					
+					//System.out.println("# " + frame.p.getGraphics());
+					Boolean next = true;
+					while (next == true){
+						try {
+							frame.p.getGraphics();
+							if (frame.p.getGraphics() != null) next = false;
+						}catch(Exception e){
+							//System.out.println("");
+							next = true;
 						}
-					}  
+					}
+					Draw(graph, ants, Verticles); // ArrayList<List<Path>> ; ArrayList<Ant> ; int
+					ants.get(index).Clear();
                 }
+				n = 0.0;
+				
+				/*for (int k = 0; k < graph.size(); k++){
+					for (int j = 0; j < graph.get(k).size(); j++){
+						System.out.print(graph.get(k).get(j).to);
+					}
+					System.out.println();
+				}*/
+				//System.out.println(graph.size() + " " + ants.get(index).position);
+				for(int another_index=0;another_index < graph.get(ants.get(index).position).size()-1 ; another_index++)
+				{
+					if(!ants.get(index).cities.get(
+							graph.get(ants.get(index).position).get(another_index).to))
+					{
+						n += graph.get(ants.get(index).position).get(another_index).GetMultiplier();
+					}
+				}
+				for(int another_index=0;another_index < graph.get(ants.get(index).position).size() ; another_index++)
+				{	
+					if(!ants.get(index).cities.get(graph.get(ants.get(index).position).get(another_index).to))
+					{
+						if (r.nextDouble() > graph.get(ants.get(index).position).get(another_index).GetMultiplier() / n) continue;
+						ants.get(index).Move(graph.get(ants.get(index).position).get(another_index));
+						ants.get(index).cities.set(graph.get(ants.get(index).position).get(another_index).to,true);
+						ants.get(index).visits++;
+						break;
+					}
+				}  
             }
-			int min = 100;
-			for(int i=0;i<results.size();++i)
-			{
-				min = (results.get(i) < min) ? results.get(i) : min;
-			}
-			//System.out.println(min);
-			
-			
         }
+		int min = 100;
+		for(int i=0;i<results.size();++i)
+		{
+			min = (results.get(i) < min) ? results.get(i) : min;
+		}
+		//System.out.println(min);
+		
+	}
+	
 	public static List<List<Path>> GenerateGraph()
         {
             Random r = new Random();
