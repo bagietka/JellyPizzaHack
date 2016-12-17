@@ -72,9 +72,18 @@ public class Panel extends JPanel {
 		}
 	}
 	
-	public void paintBackbone(Graphics g, int n, int v, List<List<Path>> graph, List<Ant> ants)
+	public void paintBestWay(Graphics g, List<Path> bestway){
+		backbone.drawBestWay(g, bestway);
+	}
+	
+	public void paintBackbone(Graphics g, int n, List<Path> bestway, List<List<Path>> graph, List<Ant> ants)
 	{
-		backbone.drawMe(g,n,v, graph, ants);
+		backbone.drawMe(g,n, bestway, graph, ants);
+	}
+	
+	public void paintBackbone(Graphics g, int n, List<List<Path>> graph, List<Ant> ants)
+	{
+		backbone.drawMe(g,n, graph, ants);
 		//backbone.drawMe(g, 1000000, 2);
 		//wyglada super, ale jest bezuzyteczne
 	}

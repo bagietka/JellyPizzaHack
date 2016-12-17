@@ -4,8 +4,8 @@ import java.util.*;
 
 public class acofortsp
     {
-    static public int Ants = 200; // count of ants;
-    static public int Iterations = 500;
+    static public int Ants = 10; // count of ants;
+    static public int Iterations = 3000;
     static public int Verticles = 7;
     static public int MaxLength = 9;// max length of path
     static public double Alpha = 1; // wykladnik
@@ -15,6 +15,7 @@ public class acofortsp
     static public double Bonus = 1; // prize for finding better way
     static public List<List<Path>> graph;
     static MainFrame frame;
+    static public List<Path> bestway;
     
     
 	public static void main(String[] args)
@@ -42,7 +43,7 @@ public class acofortsp
 		results.add(MaxLength * Verticles);
         List<Ant> finished = new ArrayList<Ant>();
 		int shortest = 10000;
-		List<Path> bestway;
+		
         Random r = new Random(105);
         for (int j = 0; j < Ants; j++) ants.add(new Ant(r.nextInt(Verticles), Verticles));
         double n = 0.0;
@@ -85,19 +86,12 @@ public class acofortsp
 							next = true;
 						}
 					}
-					Draw(graph, ants, Verticles); // ArrayList<List<Path>> ; ArrayList<Ant> ; int
+					Draw(graph, ants, bestway, Verticles); // ArrayList<List<Path>> ; ArrayList<Ant> ; int
 					//Draw(graph, ants, bestway, Verticles); // ArrayList<List<Path>> ; ArrayList<Ant> ; ArrayList<Path>  ;int
 					ants.get(index).Clear();
                 }
 				n = 0.0;
 				
-				/*for (int k = 0; k < graph.size(); k++){
-					for (int j = 0; j < graph.get(k).size(); j++){
-						System.out.print(graph.get(k).get(j).to);
-					}
-					System.out.println();
-				}*/
-				//System.out.println(graph.size() + " " + ants.get(index).position);
 				for(int another_index=0;another_index < graph.get(ants.get(index).position).size()-1 ; another_index++)
 				{
 					if(!ants.get(index).cities.get(
@@ -119,6 +113,7 @@ public class acofortsp
 				}  
             }
         }
+        frame.p.paintBestWay(frame.p.getGraphics(),bestway);
 		int min = 100;
 		for(int i=0;i<results.size();++i)
 		{
@@ -157,9 +152,9 @@ public class acofortsp
             return res;
         }
 	
-	public static void Draw(List<List<Path>> graph2, List<Ant> ants2, int Verticles){
+	public static void Draw(List<List<Path>> graph2, List<Ant> ants2, List<Path> bestway, int Verticles){
 		
-		frame.p.paintBackbone(frame.p.getBetterGraphics(),Verticles, 2 , graph2, ants2); //TODO Verticles +1 ? Rudy!!!
+		frame.p.paintBackbone(frame.p.getBetterGraphics(),Verticles, bestway, graph2, ants2);
 	}
 	
 	}
