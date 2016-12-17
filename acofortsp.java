@@ -63,7 +63,7 @@ public class acofortsp
     {
     static public int Ants = 20; // count of ants;
     static public int Iterations = 500;
-    static public int Verticles = 5;
+    static public int Verticles = 10;
     static public int MaxLength = 9;// max length of path
     static public double Alpha = 1; // wykladnik
     static public double Beta = 1; // wykladnik
@@ -101,7 +101,7 @@ public class acofortsp
             {
 				for(int index=0;index < ants.size();++index)
                 {
-                    if (ants.get(index).visits == Verticles+1) // all cities are visited
+                    if (ants.get(index).visits == Verticles) // all cities are visited
                     {
                         ants.get(index).lengthOfWay += graph.get(ants.get(index).start_city).get(ants.get(index).way.get(ants.get(index).way.size()-1).to).Length;
                         ants.get(index).way.add(graph.get(ants.get(index).way.get(ants.get(index).way.size()-1).to).get(ants.get(index).start_city));
@@ -135,7 +135,15 @@ public class acofortsp
 						ants.get(index).Clear();
                     }
 					n = 0.0;
-					for(int another_index=0;another_index < graph.get(ants.get(index).position).size() ; another_index++)
+					
+					/*for (int k = 0; k < graph.size(); k++){
+						for (int j = 0; j < graph.get(k).size(); j++){
+							System.out.print(graph.get(k).get(j).to);
+						}
+						System.out.println();
+					}*/
+					System.out.println(graph.size() + " " + ants.get(index).position);
+					for(int another_index=0;another_index < graph.get(ants.get(index).position).size()-1 ; another_index++)
 					{
 						if(!ants.get(index).cities.get(
 								graph.get(ants.get(index).position).get(another_index).to))
@@ -169,22 +177,22 @@ public class acofortsp
         {
             Random r = new Random();
             List<List<Path>> res = new ArrayList<List<Path>>();
-            for (int i = 0; i <= Verticles; ++i)
+            for (int i = 0; i < Verticles; ++i)
             {
                 res.add(new ArrayList<Path>());
-                for (int j = 0; j <= Verticles; ++j) 
+                for (int j = 0; j < Verticles; ++j) 
                 {
                     res.get(i).add(new Path(-1, -1, -1, -1));
                 }
             }
-            for (int i = 0; i <= Verticles; ++i)
+            for (int i = 0; i < Verticles; ++i)
             {
-                for (int j = i; j <= Verticles; ++j)
+                for (int j = i; j < Verticles; ++j)
                 {
                     res.get(i).set(j,new Path(i, j, r.nextInt(MaxLength)+1, 1.0 / Verticles));
                 }
             }
-            for (int i = 0; i <= Verticles; ++i)
+            for (int i = 0; i < Verticles; ++i)
             {
                 for (int j = 0; j < i; ++j)
                 {
@@ -196,7 +204,7 @@ public class acofortsp
 	
 	public static void Draw(List<List<Path>> graph2, List<Ant> ants2, int Verticles){
 		
-		frame.p.paintBackbone(frame.p.getBetterGraphics(),Verticles,2, graph2, ants2);
+		frame.p.paintBackbone(frame.p.getBetterGraphics(),Verticles,2, graph2, ants2); //TODO Verticles +1 ? Rudy!!!
 	}
 	
 	}
