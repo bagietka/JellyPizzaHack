@@ -1,26 +1,21 @@
 import java.util.*;
-import java.util.Scanner;
 
-class Ant
+class ClAnt
     {
         public int position;
         public int lengthOfWay;
-        public List<Path> way; // list of visited verticles
-        public List<Boolean> cities;
+        public List<ClPath> way; // list of visited verticles
         public int visits;
         public int start_city;
-        public Ant(int pos)
+        public ClAnt(int pos)
         {
             this.position = pos;
             this.start_city = pos;
-            this.way = new ArrayList<Path>();
+            this.way = new ArrayList<ClPath>();
             this.visits = 1;
             this.lengthOfWay = 0;
-            this.cities = new ArrayList<Boolean>();
-            for (int i = 0; i <= classicaco.Verticles; ++i) this.cities.add(false);
-            this.cities.set(position,true);
         }
-        public void Move(Path p)
+        public void Move(ClPath p)
         {
             this.position = p.to;
             this.lengthOfWay += p.Length;
@@ -30,13 +25,11 @@ class Ant
         {
             this.position = this.start_city;
             this.visits = 1;
-            this.way = new ArrayList<Path>();
+            this.way = new ArrayList<ClPath>();
             this.lengthOfWay = 0;
-            for (int i = 0; i <= classicaco.Verticles; ++i) this.cities.set(i,false);
-            this.cities.set(position,true);
         }
     }
-class Path
+class ClPath
     {
         public int from;
         public int to;
@@ -44,7 +37,7 @@ class Path
         private int _length;
         public double InvertedLength;
         public int Length;
-        public Path(int s, int e, int l,double ph)
+        public ClPath(int s, int e, int l,double ph)
         {
             this.from = s;
             this.to = e;
@@ -60,44 +53,48 @@ class Path
     }
 public class classicaco
     {
-    static public int Ants = 20; // count of ants;
-    static public int Iterations = 3575;
+    static public int Ants = 75; // count of ants;
+    static public int Iterations = 3221;
     static public int MaxLength = 20;// max length of path
-	static public int Degree = 100;// degree of Rudy's graph
+	static public int Degree = 200;// degree of Rudy's graph
     static public int Verticles = 8 * Degree + 5;
-    static public double Alpha = 1; // wykladnik
-    static public double Beta = 1.5; // wykladnik
-    static public double Ro = 0.3; // p in (1-p)*pheromone
-    static public double Q = 2.14; // adding pheromone
-    static public double Bonus = 1.5; // prize for finding better way
-    static public ArrayList<ArrayList<Path>> graph;
+    static public double Alpha = 2.1; // wykladnik
+    static public double Beta = 5.5; // wykladnik
+    static public double Ro = 0.32; // p in (1-p)*pheromone
+    static public double Q = 3.14; // adding pheromone
+    static public double Bonus = 5; // prize for finding better way
+    static public ArrayList<ArrayList<ClPath>> graph;
 	public static void main(String[] args)
         {
 			graph = GenerateGraph(Degree, Verticles);
-            List<Ant> ants = new ArrayList<Ant>();
-            ArrayList<Ant> finished = new ArrayList<Ant>();
-            List<Path> bbb = new ArrayList<Path>();
+            List<ClAnt> ants = new ArrayList<ClAnt>();
+            ArrayList<ClAnt> finished = new ArrayList<ClAnt>();
+            List<ClPath> bbb = new ArrayList<ClPath>();
             ArrayList<Integer> results = new ArrayList<Integer>();
 			results.add(MaxLength * Verticles);
-            Random r = new Random(105);
-            for (int j = 0; j < Ants; j++) ants.add(new Ant(0));
+            int mininum = results.get(0);
+			Random r = new Random(105);
+            for (int j = 0; j < Ants; j++) ants.add(new ClAnt(0));
             double n = 0.0;
             for (int i = 0; i < Iterations; ++i) 
             {
-				for(Ant ant:ants)
+				for(ClAnt ant:ants)
 				{
 					if(ant.position == Verticles) 
 					{
 						double delta = Q / ant.lengthOfWay;
 						results.add(ant.lengthOfWay);
 						System.out.println(ant.lengthOfWay);
-						for(Path path : ant.way)
+						if (mininum > ant.lengthOfWay)
 						{
-							path.pheromone += Bonus * delta;
+							for(ClPath path : ant.way) path.pheromone += Bonus*delta;
+							mininum =  ant.lengthOfWay;
 						}
-						for(ArrayList<Path> list : graph)
+						else for(ClPath path : ant.way) path.pheromone += delta;
+						
+						for(ArrayList<ClPath> list : graph)
 						{
-							for(Path path : list)
+							for(ClPath path : list)
 							{
 								path.pheromone *= (1-Ro);
 							}
@@ -105,31 +102,24 @@ public class classicaco
 						ant.Clear();
 					}
 					n = 0.0;
-					for(Path path : graph.get(ant.position))
+					for(ClPath path : graph.get(ant.position))
 					{                 
-						if(!ant.cities.get(path.to)) n += path.GetMultiplier();
+						n += path.GetMultiplier();
 					}
-					for(Path path : graph.get(ant.position))
+					for(ClPath path : graph.get(ant.position))
 					{	
-						if(!ant.cities.get(path.to)){
-							if (r.nextDouble() > path.GetMultiplier() / n) continue;
-							ant.Move(path);
-							ant.cities.set(path.to,true);
-							ant.visits++;
-							break;
-						}
+						if (r.nextDouble() > path.GetMultiplier() / n) continue;
+						ant.Move(path);
+						ant.visits++;
+						break;
+						
 					}  
                 }
             }
-			int min = 10000000;
-			for(int i=0;i<results.size();++i)
-			{
-				min = (results.get(i) < min) ? results.get(i) : min;
-			}
 			System.out.print("best:");
 			System.out.println(CalcShortPath(0, Verticles));
 			System.out.print("our best:");
-			System.out.println(min);
+			System.out.println(mininum);
         }
 		static int CalcShortPath(int from, int to)
 			{
@@ -143,7 +133,7 @@ public class classicaco
 					int top = q.remove();
 					for(int index = 0; index < graph.get(top).size(); index++)
 					{
-						Path p = graph.get(top).get(index);
+						ClPath p = graph.get(top).get(index);
 						if(dist[p.to] > dist[p.from] + p.Length)
 						{
 							dist[p.to] = dist[p.from] + p.Length;
@@ -153,45 +143,45 @@ public class classicaco
 				}
 			return dist[to];
 			}
-	static public ArrayList<ArrayList<Path>> GenerateGraph(int degree, int verticles)
+	static public ArrayList<ArrayList<ClPath>> GenerateGraph(int degree, int verticles)
         {
             Random r = new Random();
-            ArrayList<ArrayList<Path>> res = new ArrayList<ArrayList<Path>>();
-            ArrayList<Path> verticle = new ArrayList<Path>();
+            ArrayList<ArrayList<ClPath>> res = new ArrayList<ArrayList<ClPath>>();
+            ArrayList<ClPath> verticle = new ArrayList<ClPath>();
             for(int i=1;i<=4;++i)   
 				{
-				verticle.add(new Path(0, i, r.nextInt(MaxLength)+1, 1.0/verticles));
+				verticle.add(new ClPath(0, i, r.nextInt(MaxLength)+1, 1.0/verticles));
 				}
             res.add(verticle);                                                              
             for (int i=0;i<degree;++i)                                                      
             {                                                                               
-                for (int j = 0; j < 8; j++) res.add(new ArrayList<Path>());                      
-                res.get(8 * i + 2).add(new Path(8 * i + 2, 8 * i + 1 , r.nextInt(MaxLength)+1, 1.0/verticles));
-                res.get(8 * i + 3).add(new Path(8 * i + 3, 8 * i + 2 , r.nextInt(MaxLength)+1, 1.0/verticles));
-                res.get(8 * i + 4).add(new Path(8 * i + 4, 8 * i + 3 , r.nextInt(MaxLength)+1, 1.0/verticles));
-                res.get(8 * i + 5).add(new Path(8 * i + 5, 8 * i + 6 , r.nextInt(MaxLength)+1, 1.0/verticles));
-                res.get(8 * i + 6).add(new Path(8 * i + 6, 8 * i + 7 , r.nextInt(MaxLength)+1, 1.0/verticles));
-                res.get(8 * i + 7).add(new Path(8 * i + 7, 8 * i + 8 , r.nextInt(MaxLength)+1, 1.0/verticles));// pion
-                res.get(8 * i + 5).add(new Path(8 * i + 5, 8 * i + 9 , r.nextInt(MaxLength)+1, 1.0/verticles));
-                res.get(8 * i + 6).add(new Path(8 * i + 6, 8 * i + 10, r.nextInt(MaxLength)+1, 1.0/verticles));
-                res.get(8 * i + 7).add(new Path(8 * i + 7, 8 * i + 11, r.nextInt(MaxLength)+1, 1.0/verticles));
-                res.get(8 * i + 8).add(new Path(8 * i + 8, 8 * i + 12, r.nextInt(MaxLength)+1, 1.0/verticles));
-                res.get(8 * i + 1).add(new Path(8 * i + 1, 8 * i + 5 , r.nextInt(MaxLength)+1, 1.0/verticles));
-                res.get(8 * i + 2).add(new Path(8 * i + 2, 8 * i + 6 , r.nextInt(MaxLength)+1, 1.0/verticles));
-                res.get(8 * i + 3).add(new Path(8 * i + 3, 8 * i + 7 , r.nextInt(MaxLength)+1, 1.0/verticles));
-                res.get(8 * i + 4).add(new Path(8 * i + 4, 8 * i + 8 , r.nextInt(MaxLength)+1, 1.0/verticles)); // poziom
-                res.get(8 * i + 2).add(new Path(8 * i + 2, 8 * i + 5 , r.nextInt(MaxLength)+1, 1.0/verticles));
-                res.get(8 * i + 3).add(new Path(8 * i + 3, 8 * i + 6 , r.nextInt(MaxLength)+1, 1.0/verticles));
-                res.get(8 * i + 4).add(new Path(8 * i + 4, 8 * i + 7 , r.nextInt(MaxLength)+1, 1.0/verticles));
-                res.get(8 * i + 5).add(new Path(8 * i + 5, 8 * i + 10, r.nextInt(MaxLength)+1, 1.0/verticles));
-                res.get(8 * i + 6).add(new Path(8 * i + 6, 8 * i + 11, r.nextInt(MaxLength)+1, 1.0/verticles));
-                res.get(8 * i + 7).add(new Path(8 * i + 7, 8 * i + 12, r.nextInt(MaxLength)+1, 1.0/verticles));   
+                for (int j = 0; j < 8; j++) res.add(new ArrayList<ClPath>());                      
+                res.get(8 * i + 2).add(new ClPath(8 * i + 2, 8 * i + 1 , r.nextInt(MaxLength)+1, 1.0/verticles));
+                res.get(8 * i + 3).add(new ClPath(8 * i + 3, 8 * i + 2 , r.nextInt(MaxLength)+1, 1.0/verticles));
+                res.get(8 * i + 4).add(new ClPath(8 * i + 4, 8 * i + 3 , r.nextInt(MaxLength)+1, 1.0/verticles));
+                res.get(8 * i + 5).add(new ClPath(8 * i + 5, 8 * i + 6 , r.nextInt(MaxLength)+1, 1.0/verticles));
+                res.get(8 * i + 6).add(new ClPath(8 * i + 6, 8 * i + 7 , r.nextInt(MaxLength)+1, 1.0/verticles));
+                res.get(8 * i + 7).add(new ClPath(8 * i + 7, 8 * i + 8 , r.nextInt(MaxLength)+1, 1.0/verticles));// pion
+                res.get(8 * i + 5).add(new ClPath(8 * i + 5, 8 * i + 9 , r.nextInt(MaxLength)+1, 1.0/verticles));
+                res.get(8 * i + 6).add(new ClPath(8 * i + 6, 8 * i + 10, r.nextInt(MaxLength)+1, 1.0/verticles));
+                res.get(8 * i + 7).add(new ClPath(8 * i + 7, 8 * i + 11, r.nextInt(MaxLength)+1, 1.0/verticles));
+                res.get(8 * i + 8).add(new ClPath(8 * i + 8, 8 * i + 12, r.nextInt(MaxLength)+1, 1.0/verticles));
+                res.get(8 * i + 1).add(new ClPath(8 * i + 1, 8 * i + 5 , r.nextInt(MaxLength)+1, 1.0/verticles));
+                res.get(8 * i + 2).add(new ClPath(8 * i + 2, 8 * i + 6 , r.nextInt(MaxLength)+1, 1.0/verticles));
+                res.get(8 * i + 3).add(new ClPath(8 * i + 3, 8 * i + 7 , r.nextInt(MaxLength)+1, 1.0/verticles));
+                res.get(8 * i + 4).add(new ClPath(8 * i + 4, 8 * i + 8 , r.nextInt(MaxLength)+1, 1.0/verticles)); // poziom
+                res.get(8 * i + 2).add(new ClPath(8 * i + 2, 8 * i + 5 , r.nextInt(MaxLength)+1, 1.0/verticles));
+                res.get(8 * i + 3).add(new ClPath(8 * i + 3, 8 * i + 6 , r.nextInt(MaxLength)+1, 1.0/verticles));
+                res.get(8 * i + 4).add(new ClPath(8 * i + 4, 8 * i + 7 , r.nextInt(MaxLength)+1, 1.0/verticles));
+                res.get(8 * i + 5).add(new ClPath(8 * i + 5, 8 * i + 10, r.nextInt(MaxLength)+1, 1.0/verticles));
+                res.get(8 * i + 6).add(new ClPath(8 * i + 6, 8 * i + 11, r.nextInt(MaxLength)+1, 1.0/verticles));
+                res.get(8 * i + 7).add(new ClPath(8 * i + 7, 8 * i + 12, r.nextInt(MaxLength)+1, 1.0/verticles));   
             }                                                                              
-            for (int i = 1; i <= 4; ++i) res.add(new ArrayList<Path>());
-			for (int i = 1; i <= 4; ++i) res.get(8*degree+1).add( 
-					new Path(8 * degree + i, 8 * degree + 5, r.nextInt(MaxLength)+1, 1.0/verticles));
+            for (int i = 1; i <= 4; ++i) res.add(new ArrayList<ClPath>());
+			for (int i = 1; i <= 4; ++i) res.get(8*degree+i).add( 
+					new ClPath(8 * degree + i, 8 * degree + 5, r.nextInt(MaxLength)+1, 1.0/verticles));
             
-			res.add(new ArrayList<Path>()); // empty list for last verticle
+			res.add(new ArrayList<ClPath>()); // empty list for last verticle
             return res;
 		}
 	}
