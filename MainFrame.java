@@ -20,6 +20,21 @@ public class MainFrame extends JFrame {
 	private JPanel contentPane;
 	public Panel p;
 
+	/**
+	 * Launch the application.
+	 */
+	/*public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					MainFrame frame = new MainFrame();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});*/
+	
 
 	/**
 	 * Create the frame.
@@ -85,7 +100,7 @@ public class MainFrame extends JFrame {
 		JButton btnNewButton_5 = new JButton("Niespodzianka!");
 		btnNewButton_5.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+				p.setChoice(2, p.getGraphics());
 			}
 		});
 		panel.add(btnNewButton_5);
