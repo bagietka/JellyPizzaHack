@@ -41,6 +41,8 @@ public class MainFrame extends JFrame {
 	 * Create the frame.
 	 */
 	public MainFrame() {
+		setIconImage(Toolkit.getDefaultToolkit().getImage("D:\\PWr\\JP - lab\\JPH\\src\\ant.png"));
+		setTitle("Symulator kolonii mr\u00F3wek");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		//setBounds(100, 100, 450, 300);
 		//this.setSize(Toolkit.getDefaultToolkit().getScreenSize());

@@ -4,14 +4,14 @@ import java.util.*;
 
 public class acofortsp
     {
-    static public int Ants = 10; // count of ants;
-    static public int Iterations = 400;
+    static public int Ants = 50; // count of ants;
+    static public int Iterations = 2000;
     static public int Verticles = 7;
     static public int MaxLength = 9;// max length of path
     static public double Alpha = 1; // wykladnik
     static public double Beta = 1; // wykladnik
     static public double Ro = 0.01; // p in (1-p)*pheromone
-    static public double Q = 2; // adding pheromone
+    static public double Q = 4; // adding pheromone
     static public double Bonus = 1; // prize for finding better way
     static public List<List<Path>> graph;
     static MainFrame frame;

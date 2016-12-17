@@ -2,15 +2,15 @@ import java.util.*;
 import java.*;
 public class asrankaco
     {
-    static public int Ants = 10; // count of ants;
-    static public int Iterations = 500;
+    static public int Ants = 50; // count of ants;
+    static public int Iterations = 1000;
     static public int MaxLength = 9;// max length of path
-	static public int Degree = 5;// degree of Rudy's graph
+	static public int Degree = 7;// degree of Rudy's graph
     static public int Verticles = 8 * Degree + 5;
     static public double Alpha = 2.1; // wykladnik
     static public double Beta = 5.61; // wykladnik
-    static public double Ro = 0.01; // p in (1-p)*pheromone
-    static public double Q = 2; // adding pheromone
+    static public double Ro = 0.05; // p in (1-p)*pheromone
+    static public double Q = 1 ; // adding pheromone
     static public double Bonus = 1; // prize for finding better way
     static public List<List<Path>> graph;
 	public static void start()

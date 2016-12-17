@@ -2,10 +2,10 @@ import java.util.*;
 
 public class classicaco
     {
-    static public int Ants = 10; // count of ants;
-    static public int Iterations = 500;
+    static public int Ants = 50; // count of ants;
+    static public int Iterations = 3000;
     static public int MaxLength = 10;// max length of path
-	static public int Degree = 5;// degree of Rudy's graph
+	static public int Degree = 7;// degree of Rudy's graph
     static public int Verticles = 8 * Degree + 5;
     static public double Alpha = 2.1; // wykladnik
     static public double Beta = 5.5; // wykladnik
