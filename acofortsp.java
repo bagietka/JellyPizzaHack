@@ -41,6 +41,8 @@ public class acofortsp
         List<Integer> results = new ArrayList<Integer>();
 		results.add(MaxLength * Verticles);
         List<Ant> finished = new ArrayList<Ant>();
+		int shortest = 10000;
+		List<Path> bestway;
         Random r = new Random(105);
         for (int j = 0; j < Ants; j++) ants.add(new Ant(r.nextInt(Verticles), Verticles));
         double n = 0.0;
@@ -52,7 +54,12 @@ public class acofortsp
                 {
                     ants.get(index).lengthOfWay += graph.get(ants.get(index).start_city).get(ants.get(index).way.get(ants.get(index).way.size()-1).to).Length;
                     ants.get(index).way.add(graph.get(ants.get(index).way.get(ants.get(index).way.size()-1).to).get(ants.get(index).start_city));
-                    results.add(ants.get(index).lengthOfWay);
+                    int res = ants.get(index).lengthOfWay;
+					if(res < shortest) 
+						{
+						shortest = res; bestway = ants.get(index).way;
+						}
+					results.add(res);
                     double delta = Q / ants.get(index).lengthOfWay;
 					for(int another_index = 0; another_index < ants.get(index).way.size();++another_index)
 					{
@@ -79,6 +86,7 @@ public class acofortsp
 						}
 					}
 					Draw(graph, ants, Verticles); // ArrayList<List<Path>> ; ArrayList<Ant> ; int
+					//Draw(graph, ants, bestway, Verticles); // ArrayList<List<Path>> ; ArrayList<Ant> ; ArrayList<Path>  ;int
 					ants.get(index).Clear();
                 }
 				n = 0.0;
