@@ -1,78 +1,12 @@
 import java.util.*;
 import java.*;
-
-class Ant
-    {
-        public int position;
-        public int lengthOfWay;
-        public List<Path> way; // list of visited verticles
-        public List<Boolean> cities;
-        public int visits;
-        public int start_city;
-        public Ant(int pos)
-        {
-            this.position = pos;
-            this.start_city = pos;
-            this.way = new ArrayList<Path>();
-            this.visits = 1;
-            this.lengthOfWay = 0;
-            this.cities = new ArrayList<Boolean>();
-            for (int i = 0; i <= asrankaco.Verticles; ++i) this.cities.add(false);
-            this.cities.set(position,true);
-        }
-        public void Move(Path p)
-        {
-            this.position = p.to;
-            this.lengthOfWay += p.Length;
-            this.way.add(p);
-        }
-        public void Clear()
-        {
-            this.position = this.start_city;
-            this.visits = 1;
-            this.way = new ArrayList<Path>();
-            this.lengthOfWay = 0;
-            for (int i = 0; i <= asrankaco.Verticles; ++i) this.cities.set(i,false);
-            this.cities.set(position,true);
-        }
-    }
-class Path
-    {
-        public int from;
-        public int to;
-        public double pheromone;
-        private int _length;
-        public double InvertedLength;
-        public int Length;
-        public Path(int s, int e, int l,double ph)
-        {
-            this.from = s;
-            this.to = e;
-            this.pheromone = ph;
-            this.Length = l;
-			this.InvertedLength = 1.0 / this.Length; // bugogenne, wcześniej był setter zmieniający dwa!
-        }
-        public double GetMultiplier()
-        {
-            return Math.pow(this.pheromone, asrankaco.Alpha) *
-                   Math.pow(this.InvertedLength, asrankaco.Beta);
-        }
-    }
-class CompareTo implements Comparator <Path>
-	{
-	@Override
-	public int compare(Path p1, Path p2)
-		{
-			return (p2.Length - p1.Length);
-		}
-	}
 public class asrankaco
     {
     static public int Ants = 20; // count of ants;
     static public int Iterations = 500;
-    static public int Verticles = 5;
     static public int MaxLength = 9;// max length of path
-	static public int Degree = 500;// degree of Rudy's graph
+	static public int Degree = 100;// degree of Rudy's graph
+    static public int Verticles = 8 * Degree + 5;
     static public double Alpha = 1; // wykladnik
     static public double Beta = 1; // wykladnik
     static public double Ro = 0.01; // p in (1-p)*pheromone
@@ -88,37 +22,29 @@ public class asrankaco
             ArrayList<Integer> results = new ArrayList<Integer>();
 			results.add(MaxLength * Verticles);
             Random r = new Random(105);
-            for (int j = 0; j < Ants; j++) ants.add(new Ant(r.nextInt(Verticles)+1));
+            for (int j = 0; j < Ants; j++) ants.add(new Ant(0, Verticles));
             double n = 0.0;
             for (int i = 0; i < Iterations; ++i) 
             {
-				for(int index=0;index < ants.size();++index)
-                {
-					if(ants.get(index).position == Verticles) finished.add(ants.get(index));
+				for(Ant ant : ants)
+				{
+					if(ant.position == Verticles) finished.add(ant);
                     if(finished.size() == Ants)
                     {
                         ASrank(finished, results);
                         finished = new ArrayList<Ant>();
                     }
 					n = 0.0;
-                    for(int another_index=0;another_index < graph.get(ants.get(index).position).size() ; another_index++)
+					for(Path p : graph.get(ant.position))
 					{
-						if(!ants.get(index).cities.get(// kopiowane, ciekawe czy wejdzie
-								graph.get(ants.get(index).position).get(another_index).to))
-						{
-							n += graph.get(ants.get(index).position).get(another_index).GetMultiplier();
-						}
+						n += p.GetMultiplier();
 					}
-					for(int another_index=0;another_index < graph.get(ants.get(index).position).size() ; another_index++)
+					for(Path p : graph.get(ant.position))
 					{	
-						if(!ants.get(index).cities.get(graph.get(ants.get(index).position).get(another_index).to))
-						{
-							if (r.nextDouble() > graph.get(ants.get(index).position).get(another_index).GetMultiplier() / n) continue;
-							ants.get(index).Move(graph.get(ants.get(index).position).get(another_index));
-							ants.get(index).cities.set(graph.get(ants.get(index).position).get(another_index).to,true);
-							ants.get(index).visits++;
-							break;
-						}
+						if (r.nextDouble() > p.GetMultiplier() / n) continue;
+						ant.Move(p);
+						ant.visits++;
+						break;
 					}  
                 }
             }
@@ -135,8 +61,7 @@ public class asrankaco
 			{
 				results.add(list.get(index).lengthOfWay);
 			}
-			//results.AddRange(list.Select(ant => ant.lengthOfWay));
-			Collections.sort(list, new CompareTo());
+			KochamSortowacWJavie(list);
 			for(int index = 0; index < list.size(); ++index)
 				{
 					double delta = Q / list.get(index).lengthOfWay;
@@ -149,7 +74,6 @@ public class asrankaco
 				{
 					list.get(index).Clear();
 				}
-				//list.ForEach(ant => ant.Clear());
 			for(int another_index = 0; another_index < graph.size();++another_index)
 				{
 				for(int one_more_another_index = 0; one_more_another_index < graph.get(another_index).size() ; one_more_another_index++)
@@ -157,6 +81,22 @@ public class asrankaco
 						graph.get(another_index).get(one_more_another_index).pheromone *= (1-Ro);
 					}
 				}
+		}
+		static void KochamSortowacWJavie(ArrayList<Ant> list)
+		{
+			Ant qux;
+			int minidx;
+			for(int i=0;i<list.size();++i)
+			{
+				minidx = i;
+				for(int j=i;j<list.size();++j)
+				{
+					if(list.get(j).lengthOfWay < list.get(minidx).lengthOfWay) minidx = j;
+				}
+				qux = list.get(i);
+				list.set(i,list.get(minidx));
+				list.set(minidx,qux);
+			}
 		}
 		static int CalcShortPath(List<List<Path>> graph, int from, int to)
 			{
@@ -215,7 +155,7 @@ public class asrankaco
                 res.get(8 * i + 7).add(new Path(8 * i + 7, 8 * i + 12, r.nextInt(MaxLength)+1, 1.0/verticles));   
             }                                                                              
             for (int i = 1; i <= 4; ++i) res.add(new ArrayList<Path>());
-			for (int i = 1; i <= 4; ++i) res.get(8*degree+1).add( 
+			for (int i = 1; i <= 4; ++i) res.get(8*degree+i).add( 
 					new Path(8 * degree + i, 8 * degree + 5, r.nextInt(MaxLength)+1, 1.0/verticles));
             
 			res.add(new ArrayList<Path>()); // empty list for last verticle

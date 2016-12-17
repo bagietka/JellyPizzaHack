@@ -2,63 +2,6 @@ import java.awt.EventQueue;
 import java.awt.Graphics;
 import java.util.*;
 
-class Ant
-    {
-        public int position;
-        public int lengthOfWay;
-        public List<Path> way; // list of visited verticles
-        public List<Boolean> cities;
-        public int visits;
-        public int start_city;
-        public Ant(int pos)
-        {
-            this.position = pos;
-            this.start_city = pos;
-            this.way = new ArrayList<Path>();
-            this.visits = 1;
-            this.lengthOfWay = 0;
-            this.cities = new ArrayList<Boolean>();
-            for (int i = 0; i < acofortsp.Verticles; ++i) this.cities.add(false);
-            this.cities.set(position,true);
-        }
-        public void Move(Path p)
-        {
-            this.position = p.to;
-            this.lengthOfWay += p.Length;
-            this.way.add(p);
-        }
-        public void Clear()
-        {
-            this.position = this.start_city;
-            this.visits = 1;
-            this.way = new ArrayList<Path>();
-            this.lengthOfWay = 0;
-            for (int i = 0; i < acofortsp.Verticles; ++i) this.cities.set(i,false);
-            this.cities.set(position,true);
-        }
-    }
-class Path
-    {
-        public int from;
-        public int to;
-        public double pheromone;
-        private int _length;
-        public double InvertedLength;
-        public int Length;
-        public Path(int s, int e, int l,double ph)
-        {
-            this.from = s;
-            this.to = e;
-            this.pheromone = ph;
-            this.Length = l;
-			this.InvertedLength = 1.0 / this.Length; // bugogenne, wcześniej był setter zmieniający dwa!
-        }
-        public double GetMultiplier()
-        {
-            return Math.pow(this.pheromone, acofortsp.Alpha) *
-                   Math.pow(this.InvertedLength, acofortsp.Beta);
-        }
-    }
 public class acofortsp
     {
     static public int Ants = 200; // count of ants;
@@ -99,7 +42,7 @@ public class acofortsp
 		results.add(MaxLength * Verticles);
         List<Ant> finished = new ArrayList<Ant>();
         Random r = new Random(105);
-        for (int j = 0; j < Ants; j++) ants.add(new Ant(r.nextInt(Verticles)));
+        for (int j = 0; j < Ants; j++) ants.add(new Ant(r.nextInt(Verticles), Verticles));
         double n = 0.0;
         for (int i = 0; i < Iterations; ++i) 
         {
