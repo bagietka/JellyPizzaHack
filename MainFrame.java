@@ -56,18 +56,18 @@ public class MainFrame extends JFrame {
 		contentPane.add(panel, BorderLayout.EAST);
 		panel.setLayout(new GridLayout(0, 1, 0, 10));
 		
-		JButton btnNewButton = new JButton("test rysowania");
+		JButton btnNewButton = new JButton("ACO1");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				p.setChoice(1, p.getGraphics());
+				classicaco.start();
 			}
 		});
 		panel.add(btnNewButton);
 		
-		JButton btnNewButton_1 = new JButton("test szkieletu");
+		JButton btnNewButton_1 = new JButton("ACO2");
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				p.setChoice(0, p.getGraphics());				
+				asrankaco.start();			
 			}
 		});
 		panel.add(btnNewButton_1);

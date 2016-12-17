@@ -5,15 +5,15 @@ public class asrankaco
     static public int Ants = 20; // count of ants;
     static public int Iterations = 500;
     static public int MaxLength = 9;// max length of path
-	static public int Degree = 100;// degree of Rudy's graph
+	static public int Degree = 10;// degree of Rudy's graph
     static public int Verticles = 8 * Degree + 5;
     static public double Alpha = 1; // wykladnik
     static public double Beta = 1; // wykladnik
     static public double Ro = 0.01; // p in (1-p)*pheromone
     static public double Q = 2; // adding pheromone
     static public double Bonus = 1; // prize for finding better way
-    static public ArrayList<ArrayList<Path>> graph;
-	public static void main(String[] args)
+    static public List<List<Path>> graph;
+	public static void start()
         {
 			graph = GenerateGraph(Degree, Verticles);
             List<Ant> ants = new ArrayList<Ant>();
@@ -47,13 +47,25 @@ public class asrankaco
 						break;
 					}  
                 }
+				Boolean next = true;
+				while (next == true){
+					try {
+						acofortsp.frame.p.getGraphics();
+						if (acofortsp.frame.p.getGraphics() != null) next = false;
+					}catch(Exception e){
+						//System.out.println("");
+						next = true;
+					}
+				}
+				Draw(graph, ants, Degree); // ArrayList<List<Path>> ; ArrayList<Ant> ; int
+				//ants.get(index).Clear();
             }
 			int min = 10000000;
 			for(int i=0;i<results.size();++i)
 			{
 				min = (results.get(i) < min) ? results.get(i) : min;
 			}
-			System.out.println(min);
+			//System.out.println(min);
         }
 	static void ASrank(ArrayList<Ant> list, ArrayList <Integer> results)
 		{
@@ -120,11 +132,11 @@ public class asrankaco
 				}
 			return dist[to];
 			}
-	static public ArrayList<ArrayList<Path>> GenerateGraph(int degree, int verticles)
+	static public List<List<Path>> GenerateGraph(int degree, int verticles)
         {
             Random r = new Random();
-            ArrayList<ArrayList<Path>> res = new ArrayList<ArrayList<Path>>();
-            ArrayList<Path> verticle = new ArrayList<Path>();
+            List<List<Path>> res = new ArrayList<List<Path>>();
+            List<Path> verticle = new ArrayList<Path>();
             for(int i=1;i<=4;++i)   
 				{
 				verticle.add(new Path(0, i, r.nextInt(MaxLength)+1, 1.0/verticles));
@@ -161,4 +173,9 @@ public class asrankaco
 			res.add(new ArrayList<Path>()); // empty list for last verticle
             return res;
 		}
+	
+		public static void Draw(List<List<Path>> graph2, List<Ant> ants2, int Verticles){
+			acofortsp.frame.p.paintBackbone(acofortsp.frame.p.getBetterGraphics(),Verticles, 1 , graph2, ants2); //TODO Verticles +1 ? Rudy!!!
+		}
+	
 	}
