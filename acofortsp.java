@@ -6,7 +6,7 @@ public class acofortsp
     {
     static public int Ants = 200; // count of ants;
     static public int Iterations = 500;
-    static public int Verticles = 8;
+    static public int Verticles = 7;
     static public int MaxLength = 9;// max length of path
     static public double Alpha = 1; // wykladnik
     static public double Beta = 1; // wykladnik
