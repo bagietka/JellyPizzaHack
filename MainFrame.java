@@ -97,6 +97,14 @@ public class MainFrame extends JFrame {
 		});
 		panel.add(btnNewButton_2);
 		
+		JButton btnNewButton_5 = new JButton("Niespodzianka!");
+		btnNewButton_5.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+		});
+		panel.add(btnNewButton_5);
+		
 
 		
 		JPanel panel_1 = new JPanel();
