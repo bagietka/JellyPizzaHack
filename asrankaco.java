@@ -5,7 +5,7 @@ public class asrankaco
     static public int Ants = 20; // count of ants;
     static public int Iterations = 500;
     static public int MaxLength = 9;// max length of path
-	static public int Degree = 10;// degree of Rudy's graph
+	static public int Degree = 5;// degree of Rudy's graph
     static public int Verticles = 8 * Degree + 5;
     static public double Alpha = 1; // wykladnik
     static public double Beta = 1; // wykladnik

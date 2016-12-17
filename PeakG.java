@@ -33,6 +33,8 @@ public class PeakG
 			this.x += (java.awt.Toolkit.getDefaultToolkit().getScreenSize().getWidth()-200)/2;
 			this.y +=  (java.awt.Toolkit.getDefaultToolkit().getScreenSize().getHeight())/2;
 		}
+		this.x += r/2;
+		this.y += r/2;
 	}
 	
 	public int getX()

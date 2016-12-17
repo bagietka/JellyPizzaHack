@@ -2,20 +2,20 @@ import java.util.*;
 
 public class classicaco
     {
-    static public int Ants = 20; // count of ants;
-    static public int Iterations = 500;
+    static public int Ants = 75; // count of ants;
+    static public int Iterations = 3221;
     static public int MaxLength = 10;// max length of path
-	static public int Degree = 10;// degree of Rudy's graph
+	static public int Degree = 5;// degree of Rudy's graph
     static public int Verticles = 8 * Degree + 5;
-    static public double Alpha = 1; // wykladnik
-    static public double Beta = 1; // wykladnik
+    static public double Alpha = 2.1; // wykladnik
+    static public double Beta = 5.5; // wykladnik
     static public double Ro = 0.01; // p in (1-p)*pheromone
-    static public double Q = 20; // adding pheromone
-    static public double Bonus = 2; // prize for finding better way
+    static public double Q = 13; // adding pheromone
+    static public double Bonus = 5; // prize for finding better way
     static public List<List<Path>> graph;
 	public static void start()
         {
-			graph = classicaco.GenerateGraph(Degree, Verticles);
+			graph = GenerateGraph(Degree, Verticles);
             List<Ant> ants = new ArrayList<Ant>();
             ArrayList<Ant> finished = new ArrayList<Ant>();
             List<Path> bbb = new ArrayList<Path>();
@@ -33,6 +33,7 @@ public class classicaco
 					{
 						double delta = Q / ant.lengthOfWay;
 						results.add(ant.lengthOfWay);
+						//System.out.println(ant.lengthOfWay);
 						if (mininum > ant.lengthOfWay)
 						{
 							for(Path path : ant.way) path.pheromone += Bonus*delta;
@@ -45,7 +46,7 @@ public class classicaco
 							for(Path path : list)
 							{
 								path.pheromone *= (1-Ro);
-							//	System.out.println(path.pheromone);
+								//System.out.println(path.pheromone);
 							}
 							//System.out.println("###########################");
 						}
@@ -62,6 +63,7 @@ public class classicaco
 						ant.Move(path);
 						ant.visits++;
 						break;
+						
 					}  
                 }
 				Boolean next = true;
@@ -81,7 +83,7 @@ public class classicaco
 			//System.out.print("our best:");
 			//System.out.println(mininum);
         }
-		private static int CalcShortPath(int from, int to)
+		static int CalcShortPath(int from, int to)
 			{
 				int[] dist = new int[graph.size()];
 				for(int i=0;i<dist.length;++i) dist[i] = Integer.MAX_VALUE;
@@ -103,13 +105,12 @@ public class classicaco
 				}
 			return dist[to];
 			}
-	static private List<List<Path>> GenerateGraph(int degree, int verticles)
+	static public List<List<Path>> GenerateGraph(int degree, int verticles)
         {
             Random r = new Random();
             List<List<Path>> res = new ArrayList<List<Path>>();
             List<Path> verticle = new ArrayList<Path>();
-			//Path x = verticle.get(3);
-			for(int i=1;i<=4;++i)   
+            for(int i=1;i<=4;++i)   
 				{
 				verticle.add(new Path(0, i, r.nextInt(MaxLength)+1, 1.0/verticles));
 				}

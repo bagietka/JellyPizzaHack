@@ -85,18 +85,18 @@ public class Backbone {
 		
 		for (List<Path> element : graph){
 			for (Path p: element){
-				Line l = new Line(p.from,p.to, listOfPeaks, p.pheromone);
+				Line l = new Line(p.from,p.to, listOfPeaks, p.pheromone, p.Length.toString());
 				l.drawMe(g);
 			}
 		}
-	    for (Ant a: ants){
+	    /*for (Ant a: ants){
 	    	//System.out.println(listOfPeaks.get(a.position).getX() + " " + listOfPeaks.get(a.position).getY());
 	    	x = listOfPeaks.get(a.position).getX();
 	    	y = listOfPeaks.get(a.position).getY();
 	    	AntG ag = new AntG(x,y,'r');
 	    	ag.drawMe(g);
 	    	
-	    }
+	    }*/
 	}
 	
 	public List<PeakG> getList(Graphics g)

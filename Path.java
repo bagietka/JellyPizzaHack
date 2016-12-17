@@ -5,7 +5,7 @@ class Path
         public int to;
         public double pheromone;
         public double InvertedLength;
-        public int Length;
+        public Integer Length;
         public Path(int s, int e, int l,double ph)
         {
             this.from = s;
