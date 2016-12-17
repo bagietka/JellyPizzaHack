@@ -89,11 +89,7 @@ public class Panel extends JPanel {
 			
 		Graphics2D g2d = (Graphics2D) g;
 		g2d.setColor(Color.BLACK);
-<<<<<<< HEAD
 		String text = "Hcemy Tylko TÃª PizzÃª (HTTP)";
-=======
-		String text = "Hcemy Tylko Tê Pizzê (HTTP)";
->>>>>>> origin/master
 		Font f = new Font("Courier New", Font.BOLD, 60);
 		
 	
@@ -135,7 +131,6 @@ public class Panel extends JPanel {
 	public void paintBackbone(Graphics g, int n, List<Path> bestway, List<List<Path>> graph, List<Ant> ants)
 	{
 		backbone.drawMe(g,n,bestway, graph, ants);
-<<<<<<< HEAD
 		//backbone.drawMe(g, 1000000, 2);
 		//wyglada super, ale jest bezuzyteczne
 	}
@@ -143,8 +138,6 @@ public class Panel extends JPanel {
 	public void paintBackbone(Graphics g, int n, List<List<Path>> graph, List<Ant> ants)
 	{
 		backbone.drawMe(g,n, graph, ants);
-=======
->>>>>>> origin/master
 		//backbone.drawMe(g, 1000000, 2);
 		//wyglada super, ale jest bezuzyteczne
 	}
