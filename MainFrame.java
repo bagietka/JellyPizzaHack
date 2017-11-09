@@ -24,7 +24,7 @@ public class MainFrame extends JFrame {
 	/**
 	 * Launch the application.
 	 */
-	/*public static void main(String[] args) {
+	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -34,14 +34,15 @@ public class MainFrame extends JFrame {
 					e.printStackTrace();
 				}
 			}
-		});*/
+		});
+	}
 	
 
 	/**
 	 * Create the frame.
 	 */
 	public MainFrame() {
-		setIconImage(Toolkit.getDefaultToolkit().getImage("D:\\PWr\\JP - lab\\JPH\\src\\ant.png"));
+		//setIconImage(Toolkit.getDefaultToolkit().getImage("D:\\PWr\\JP - lab\\JPH\\src\\ant.png"));
 		setTitle("Symulator kolonii mr\u00F3wek");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		//setBounds(100, 100, 450, 300);

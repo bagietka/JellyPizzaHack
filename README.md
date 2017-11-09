@@ -19,4 +19,8 @@ asrankaco.java to realizacja skomplikowanego algorytmu mrówkowego na grafie Rud
 
 classicaco.java to realizacja prostego algorytmu mrówkowego na grafie Rudego
 
+Launching (tested on Windows):
+```
+javac MainFrame.java && java MainFrame
+```
 
